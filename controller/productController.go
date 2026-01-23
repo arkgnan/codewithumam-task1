@@ -3,6 +3,7 @@ package controller
 import (
 	"crud-category/dto"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 )
@@ -15,6 +16,7 @@ func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 }
 
 func StoreProduct(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Controller GetAllProducts terpanggil!")
 	var product dto.Produk
 	err := json.NewDecoder(r.Body).Decode(&product)
 	if err != nil {
