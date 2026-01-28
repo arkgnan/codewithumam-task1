@@ -1,0 +1,36 @@
+package services
+
+import (
+	"crud-category/models"
+	"crud-category/repositories"
+)
+
+type CategoryService struct {
+	repo *repositories.CategoryRepository
+}
+
+func NewCategoryService(repo *repositories.CategoryRepository) *CategoryService {
+	return &CategoryService{
+		repo: repo,
+	}
+}
+
+func (s *CategoryService) CreateCategory(category *models.Category) error {
+	return s.repo.CreateCategory(category)
+}
+
+func (s *CategoryService) GetCategoryByID(id int) (*models.Category, error) {
+	return s.repo.GetCategoryByID(id)
+}
+
+func (s *CategoryService) UpdateCategory(category *models.Category) error {
+	return s.repo.UpdateCategory(category)
+}
+
+func (s *CategoryService) DeleteCategory(id int) error {
+	return s.repo.DeleteCategory(id)
+}
+
+func (s *CategoryService) GetAllCategories() ([]models.Category, error) {
+	return s.repo.GetAllCategories()
+}
