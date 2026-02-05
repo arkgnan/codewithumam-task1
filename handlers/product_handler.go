@@ -20,7 +20,8 @@ func NewProductHandler(service *services.ProductService) *ProductHandler {
 
 func (h *ProductHandler) GetAllProducts(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	products, err := h.service.GetAllProducts()
+	name := r.URL.Query().Get("name")
+	products, err := h.service.GetAllProducts(name)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{
@@ -66,7 +67,7 @@ func (h *ProductHandler) GetProductByID(w http.ResponseWriter, r *http.Request) 
 
 func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var product models.Product
+	var product models.ProductRequest
 	err := json.NewDecoder(r.Body).Decode(&product)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -107,7 +108,7 @@ func (h *ProductHandler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var product models.Product
+	var product models.ProductRequest
 	err = json.NewDecoder(r.Body).Decode(&product)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
