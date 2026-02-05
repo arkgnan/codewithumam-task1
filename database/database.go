@@ -24,5 +24,14 @@ func InitDB(connectionString string) (*sql.DB, error) {
 	db.SetMaxIdleConns(5)
 
 	log.Println("Database connected successfully")
+
+	// Execute migration SQL statements
+	if err := runMigrations(db); err != nil {
+		db.Close() // Close the connection if migrations fail
+		return nil, err
+	}
+
+	log.Println("Database migrations executed successfully")
+
 	return db, nil
 }
