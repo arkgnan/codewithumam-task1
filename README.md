@@ -94,6 +94,48 @@ http://localhost:8080
 - Deletes the specified category.
 - Returns `204` on success or `404` when not found.
 
+## Checkout
+
+### POST /api/checkout
+
+- Initiates a checkout process.
+- Expects JSON payload:
+
+```json
+{
+  "items": [
+    {
+      "product_id": 1,
+      "quantity": 2
+    },
+    {
+      "product_id": 2,
+      "quantity": 1
+    }
+  ]
+}
+```
+
+- Responds with `201 Created` and the order object.
+
+## Reports
+
+### GET /api/reports/transaction
+
+- Returns a JSON of order objects.
+
+```json
+{
+  "total_revenue": 60000,
+  "total_transactions": 4,
+  "best_seller": {
+    "id": 9,
+    "name": "Product 5",
+    "sold_quantity": 5
+  }
+}
+```
+
 ## DTO Schemas
 
 ### Product
