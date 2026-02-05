@@ -44,7 +44,7 @@ func RegisterRoutes(db *sql.DB) *http.ServeMux {
 	router.HandleFunc("DELETE /api/categories/{id}", categoryHandler.DeleteCategory)
 
 	router.HandleFunc("POST /api/checkout", transactionHandler.Checkout)
-	router.HandleFunc("GET /api/transactions/report", transactionHandler.TransactionReport)
+	router.HandleFunc("GET /api/reports/transaction", transactionHandler.TransactionReport)
 
 	return router
 }
