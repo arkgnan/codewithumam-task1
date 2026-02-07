@@ -65,12 +65,14 @@ func (repo *TransactionRepository) CreateTransaction(items []models.CheckoutItem
 		if err != nil {
 			return nil, err
 		}
-
-		_, err = tx.Exec("INSERT INTO transaction_details (transaction_id, product_id, product_name, quantity, subtotal) VALUES ($1, $2, $3, $4, $5)",
-			transactionID, details[i].ProductID, details[i].ProductName, details[i].Quantity, details[i].Subtotal)
+		details[i].TransactionID = transactionID
+		var transactionDetailID int
+		err = tx.QueryRow("INSERT INTO transaction_details (transaction_id, product_id, product_name, quantity, subtotal) VALUES ($1, $2, $3, $4, $5) RETURNING id",
+			transactionID, details[i].ProductID, details[i].ProductName, details[i].Quantity, details[i].Subtotal).Scan(&transactionDetailID)
 		if err != nil {
 			return nil, err
 		}
+		details[i].ID = transactionDetailID
 	}
 
 	err = tx.Commit()
